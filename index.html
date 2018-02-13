@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
+	<script src="main.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> </head>
+
+<body ng-controller="itemCtrl as item" style="background-color: floralwhite">
+	<div class="container">
+		<div class="row">
+			<div class="col-10">
+				<div class="form-group row">
+					<div class="col-12">
+						<h3>Find:</h3>
+						<input type="text" class="form-control" ng-model="item.search"> </div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-10">
+				<table class="table table-bordered table-active table-hover">
+					<tr>
+						<th class="text-center" ng-click="item.orderedMe('name')">Firstname</th>
+						<th class="text-center" ng-click="item.orderedMe('sname')">Lastname</th>
+						<th class="text-center" ng-click="item.orderedMe('number')">Number</th>
+						<th >
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Add</button>
+						</th>
+					</tr>
+					<tr ng-repeat="itemElem in item.items | filter: item.search | orderBy: item.orderedBy track by itemElem.id">
+						<td>{{itemElem.name }}</td>
+						<td>{{itemElem.sname}}</td>
+						<td>{{itemElem.number}}</td>
+						<td>
+							<buttton type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" ng-click="item.update(itemElem)">CHANGE</buttton>
+							<buttton type="button" class="btn btn-danger btn-sm" ng-click="item.delete($index)">DELETE</buttton>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- Button to Open the Modal -->
+		<!-- The Modal -->
+		<div class="modal fade" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content" style="background-color: floralwhite">
+					<!-- Modal Header -->
+					<div class="modal-header">
+					
+					<table class="table table-active">
+						<tr>
+						<th class="text-center">Firstname</th>
+						<th class="text-center">Lastname</th>
+						<th class="text-center">Number</th>
+						</tr>
+						</table>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body"> 
+					<table class="table table-active">
+					<tr>
+						<td>
+							<input type="text" class="form-control" ng-model="item.currentItem.name">
+						</td>
+						<td>
+							<input type="text" class="form-control" ng-model="item.currentItem.sname">
+						</td>
+						<td>
+							<input type="text" class="form-control" ng-model="item.currentItem.number">
+						</td>
+					</tr>
+						</table>
+					  </div>
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="item.save()">Add</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
